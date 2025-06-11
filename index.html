@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<!-- Deploy command: netlify deploy --prod -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tefillah Reader</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&family=Cinzel:wght@400;600&display=swap');
+        
+        /* Add SBL Hebrew font import */
+        @font-face {
+            font-family: 'SBL Hebrew';
+            src: url('https://www.sbl-site.org/Fonts/SBLHebrew.woff2') format('woff2'),
+                 url('https://www.sbl-site.org/Fonts/SBLHebrew.woff') format('woff'),
+                 url('https://www.sbl-site.org/Fonts/SBLHebrew.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            border-bottom: 2px solid #4a90e2;
+        }
+        
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #8c7853 0%, #a0956b 25%, #b5aa7f 50%, #9d9270 75%, #7a6f4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 
+                1px 1px 0 rgba(122, 111, 78, 0.8),
+                2px 2px 0 rgba(122, 111, 78, 0.6),
+                3px 3px 0 rgba(122, 111, 78, 0.4),
+                4px 4px 8px rgba(0, 0, 0, 0.3),
+                0 0 1px rgba(140, 120, 83, 0.9);
+            letter-spacing: 0.05em;
+            position: relative;
+        }
+        
+        h1::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #4a6fa5;
+            z-index: -1;
+            text-shadow: none;
+        }
+        
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .toc-container {
+            background: #f0f8ff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            min-width: 300px;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .toc-intro {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .prayer-section {
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #4a90e2;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e0e8f0;
+            padding-bottom: 0.5rem;
+        }
+        
+        .prayer-list {
+            list-style: none;
+        }
+        
+        .prayer-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .prayer-link {
+            display: block;
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            color: #333;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e0e8f0;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .prayer-link:hover {
+            background: #e8f4fd;
+            border-color: #4a90e2;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .prayer-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .prayer-description {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .reader-container {
+            background: #f0f8ff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            min-width: 300px;
+            max-width: 800px;
+            width: 100%;
+            display: none;
+        }
+        
+        .reader-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e0e8f0;
+        }
+        
+        .prayer-title-display {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #4a90e2;
+        }
+        
+        .back-button {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            border: none;
+            background: #6c757d;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background: #5a6268;
+        }
+        
+        .word-display {
+            text-align: center;
+            margin: 1rem 0 1.5rem;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .hebrew-line {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            direction: rtl;
+            flex-wrap: wrap;
+        }
+        
+        .hebrew-word {
+            font-family: 'SBL Hebrew', 'Frank Ruhl Libre', serif;
+            font-size: 4rem;
+            line-height: 1.2;
+            direction: rtl;
+        }
+        
+        .hebrew-word.full-sentence {
+            font-size: 2.5rem;
+            margin: 0.25rem;
+        }
+        
+        .transliteration-line {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .transliteration-word {
+            font-size: 1.5rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .transliteration-word.full-sentence {
+            font-size: 1rem;
+            margin: 0.25rem;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border: none;
+            background: linear-gradient(180deg, #5b9fe6 0%, #4a90e2 100%);
+            color: white;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.1s;
+            box-shadow: 0 6px 12px rgba(74, 144, 226, 0.25), 
+                        0 3px 6px rgba(0, 0, 0, 0.15),
+                        inset 0 2px 0 rgba(255, 255, 255, 0.4),
+                        inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+            transform: translateY(0);
+        }
+        
+        button:active:not(:disabled) {
+            background: linear-gradient(180deg, #4a90e2 0%, #3d7bc6 100%);
+            box-shadow: 0 2px 4px rgba(74, 144, 226, 0.2), 
+                        0 1px 2px rgba(0, 0, 0, 0.1),
+                        inset 0 2px 4px rgba(0, 0, 0, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: translateY(2px);
+        }
+        
+        button.clicked {
+            background: linear-gradient(180deg, #4a90e2 0%, #3d7bc6 100%);
+            box-shadow: 0 2px 4px rgba(74, 144, 226, 0.2), 
+                        0 1px 2px rgba(0, 0, 0, 0.1),
+                        inset 0 2px 4px rgba(0, 0, 0, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: translateY(2px);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: linear-gradient(180deg, #9db8d6 0%, #8ba9d1 100%);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        .settings {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .setting-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        label {
+            font-size: 0.9rem;
+            color: #800020;
+            font-style: italic;
+        }
+        
+        select {
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .progress {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #800020;
+            font-style: italic;
+        }
+        
+        @media (max-width: 600px) {
+            .hebrew-word {
+                font-size: 3rem;
+            }
+            
+            .hebrew-word.full-sentence {
+                font-size: 2rem;
+            }
+            
+            .transliteration-word {
+                font-size: 1.2rem;
+            }
+            
+            .transliteration-word.full-sentence {
+                font-size: 0.9rem;
+            }
+            
+            .reader-container, .toc-container {
+                padding: 2rem 1rem;
+            }
+            
+            .reader-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 data-text="Tefillah Reader">Tefillah Reader</h1>
+		<p align=right style="color:grey"><i><small>
+			To contact developer:
+			<a href="mailto:tefillah.reader@gmail.com" style="color:grey">tefillah.reader@gmail.com</a>
+		</small></i></p>
+    </header>
+    
+    <main>
+        <div class="toc-container" id="tocContainer">
+            <div class="toc-intro">
+                Choose a prayer to practice reading Hebrew
+            </div>
+            <!-- TOC will be generated dynamically by JavaScript -->
+        </div>
+        
+        <div class="reader-container" id="readerContainer">
+            <div class="reader-header">
+                <div class="prayer-title-display" id="prayerTitleDisplay"></div>
+                <button class="back-button" onclick="showTOC()">← Back to Prayers</button>
+            </div>
+            
+            <div class="settings">
+                <div class="setting-group">
+                    <label for="displayMode">Display Mode:</label>
+                    <select id="displayMode">
+                        <option value="hebrew">Hebrew Only</option>
+                        <option value="both">Hebrew + Transliteration</option>
+                        <option value="practice" selected>Practice Mode</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <label for="wordsPerView">Words per view:</label>
+                    <select id="wordsPerView">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="sentence">Full sentence</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="word-display" id="wordDisplay">
+                <div id="paragraphIndicator" style="text-align: center;"></div>
+                <div class="hebrew-line" id="hebrewLine"></div>
+                <div class="transliteration-line" id="translitLine"></div>
+            </div>
+            
+            <div class="controls">
+                <button id="prevBtn">← Previous</button>
+                <button id="nextBtn">Next →</button>
+            </div>
+            
+            <div class="progress" id="progress"></div>
+        </div>
+    </main>
+    
+    <script src="sabbath-blessings.js"></script>
+    <script src="ritual-items.js"></script>
+    <script src="shema-prayers.js"></script>
+    <script src="amidah-blessings.js"></script>
+    
+    <script>
+        // Combine all prayer objects into one
+        const prayers = {
+            ...sabbathBlessings,
+            ...ritualItems,
+            ...shemaPrayers,
+            ...amidahBlessings
+        };
+        
+        // Prayer categories for organizing TOC
+        const prayerCategories = {
+            'Sabbath Blessings': {
+                prayers: ['candles', 'wine', 'handwashing', 'bread'],
+                descriptions: {
+                    candles: 'Blessing over Sabbath candles',
+                    wine: 'Sanctification over wine',
+                    handwashing: 'Blessing for ritual hand washing',
+                    bread: 'Blessing over bread'
+                }
+            },
+            'Ritual Items': {
+                prayers: ['tallis', 'tefillin'],
+                descriptions: {
+                    tallis: 'Blessing for the prayer shawl',
+                    tefillin: 'Blessing for phylacteries'
+                }
+            },
+            'Shema': {
+                prayers: ['yotzer_or', 'ahavah_rabbah', 'shema_paragraph_1', 'shema_paragraph_2', 'shema_paragraph_3', 'emet_vyatziv'],
+                descriptions: {
+                    yotzer_or: 'Creator of light blessing',
+                    ahavah_rabbah: 'With abundant love blessing',
+                    shema_paragraph_1: 'The central declaration and first paragraph',
+                    shema_paragraph_2: 'The conditional paragraph (V\'haya im shamoa)',
+                    shema_paragraph_3: 'The tzitzit paragraph (Vayomer)',
+                    emet_vyatziv: 'True and firm blessing'
+                }
+            },
+            'Amidah Blessings': {
+                prayers: ['avot', 'gevurot', 'kedushah', 'binah', 'teshuvah', 'selichah', 'geulah', 'refuah', 'birkat_hashanim', 'kibbutz_galuyot', 'hashavat_mishpat', 'birkat_haminim', 'al_hatzadikim', 'boneh_yerushalayim', 'tzemach_david', 'shomea_tefillah', 'avodah', 'hodaah', 'shalom'],
+                descriptions: {
+                    avot: 'God of our ancestors',
+                    gevurot: 'You are mighty forever',
+                    kedushah: 'You are holy',
+                    binah: 'You graciously bestow knowledge',
+                    teshuvah: 'Cause us to return to Your Torah',
+                    selichah: 'Pardon us, our Father',
+                    geulah: 'Behold our affliction',
+                    refuah: 'Heal us, O Lord',
+                    birkat_hashanim: 'Bless this year for us',
+                    kibbutz_galuyot: 'Sound the great shofar',
+                    hashavat_mishpat: 'Restore our judges',
+                    birkat_haminim: 'Let there be no hope for informers',
+                    al_hatzadikim: 'Upon the righteous and pious',
+                    boneh_yerushalayim: 'Return to Jerusalem in mercy',
+                    tzemach_david: 'Cause the offspring of David to flourish',
+                    shomea_tefillah: 'Hear our voice, Lord our God',
+                    avodah: 'Be favorable toward Your people',
+                    hodaah: 'We gratefully thank You',
+                    shalom: 'Grant peace, goodness and blessing'
+                }
+            }
+        };
+
+        // App state
+        let currentPrayer = '';
+        let currentPosition = 0;
+        let wordsPerView = 3;
+        let displayMode = 'practice';
+        let practiceStep = 'hebrew';
+        
+        // Generate TOC dynamically
+        function generateTOC() {
+            const tocContainer = document.getElementById('tocContainer');
+            const intro = tocContainer.querySelector('.toc-intro');
+            
+            // Clear existing content except intro
+            tocContainer.innerHTML = '';
+            tocContainer.appendChild(intro);
+            
+            // Generate sections
+            for (const [categoryName, categoryData] of Object.entries(prayerCategories)) {
+                const section = document.createElement('div');
+                section.className = 'prayer-section';
+                
+                const title = document.createElement('h2');
+                title.className = 'section-title';
+                title.textContent = categoryName;
+                section.appendChild(title);
+                
+                const list = document.createElement('ul');
+                list.className = 'prayer-list';
+                
+                categoryData.prayers.forEach(prayerKey => {
+                    if (prayers[prayerKey]) {
+                        const item = document.createElement('li');
+                        item.className = 'prayer-item';
+                        
+                        const link = document.createElement('a');
+                        link.href = '#';
+                        link.className = 'prayer-link';
+                        link.onclick = (e) => {
+                            e.preventDefault();
+                            loadPrayer(prayerKey);
+                        };
+                        
+                        const titleDiv = document.createElement('div');
+                        titleDiv.className = 'prayer-title';
+                        titleDiv.textContent = prayers[prayerKey].title;
+                        
+                        const descDiv = document.createElement('div');
+                        descDiv.className = 'prayer-description';
+                        descDiv.textContent = categoryData.descriptions[prayerKey];
+                        
+                        link.appendChild(titleDiv);
+                        link.appendChild(descDiv);
+                        item.appendChild(link);
+                        list.appendChild(item);
+                    }
+                });
+                
+                section.appendChild(list);
+                tocContainer.appendChild(section);
+            }
+        }
+        
+        // Navigation functions
+        function showTOC() {
+            document.getElementById('tocContainer').style.display = 'block';
+            document.getElementById('readerContainer').style.display = 'none';
+            
+            // Restore scroll position
+            restoreScrollPosition();
+        }
+        
+        function loadPrayer(prayerKey) {
+            if (!prayers[prayerKey]) {
+                alert('This prayer is not yet available. Coming soon!');
+                return;
+            }
+            
+            // Save current scroll position before leaving TOC
+            saveScrollPosition();
+            
+            currentPrayer = prayerKey;
+            currentPosition = 0;
+            practiceStep = 'hebrew';
+            
+            // Load saved settings
+            loadSettings();
+            
+            document.getElementById('tocContainer').style.display = 'none';
+            document.getElementById('readerContainer').style.display = 'block';
+            document.getElementById('prayerTitleDisplay').textContent = prayers[prayerKey].title;
+            
+            updateDisplay();
+        }
+        
+        // Save TOC scroll position
+        function saveScrollPosition() {
+            try {
+                const scrollY = window.scrollY || window.pageYOffset;
+                localStorage.setItem('tefillaReaderScrollPosition', scrollY.toString());
+            } catch (e) {
+                console.log('Could not save scroll position');
+            }
+        }
+        
+        // Restore TOC scroll position
+        function restoreScrollPosition() {
+            try {
+                const savedScrollY = localStorage.getItem('tefillaReaderScrollPosition');
+                if (savedScrollY !== null) {
+                    // Use setTimeout to ensure the DOM is fully rendered before scrolling
+                    setTimeout(() => {
+                        window.scrollTo(0, parseInt(savedScrollY));
+                    }, 10);
+                }
+            } catch (e) {
+                console.log('Could not restore scroll position');
+            }
+        }
+        
+        // Load settings from localStorage
+        function loadSettings() {
+            try {
+                const savedSettings = localStorage.getItem('tefillaReaderSettings');
+                if (savedSettings) {
+                    const settings = JSON.parse(savedSettings);
+                    
+                    if (settings.displayMode) {
+                        displayMode = settings.displayMode;
+                        document.getElementById('displayMode').value = displayMode;
+                    }
+                    
+                    if (settings.wordsPerView) {
+                        wordsPerView = settings.wordsPerView;
+                        document.getElementById('wordsPerView').value = wordsPerView;
+                    }
+                }
+            } catch (e) {
+                console.log('Could not load saved settings');
+            }
+        }
+        
+        // Save settings to localStorage
+        function saveSettings() {
+            try {
+                const settings = {
+                    displayMode: displayMode,
+                    wordsPerView: wordsPerView
+                };
+                localStorage.setItem('tefillaReaderSettings', JSON.stringify(settings));
+            } catch (e) {
+                console.log('Could not save settings');
+            }
+        }
+        
+        function updateDisplay() {
+            if (!currentPrayer || !prayers[currentPrayer]) return;
+            
+            const prayer = prayers[currentPrayer];
+            const words = prayer.words;
+            
+            const hebrewLine = document.getElementById('hebrewLine');
+            const translitLine = document.getElementById('translitLine');
+            const paragraphIndicator = document.getElementById('paragraphIndicator');
+            
+            hebrewLine.innerHTML = '';
+            translitLine.innerHTML = '';
+            paragraphIndicator.innerHTML = '';
+            paragraphIndicator.style.display = 'none';
+            
+            const start = currentPosition;
+            let end;
+            
+            if (wordsPerView === 'sentence') {
+                // Show full sentence (until next newParagraph or end)
+                end = start + 1;
+                for (let i = start + 1; i < words.length; i++) {
+                    if (words[i].newParagraph) {
+                        break;
+                    }
+                    end = i + 1;
+                }
+            } else {
+                end = Math.min(start + parseInt(wordsPerView), words.length);
+                // Don't cross paragraph boundaries for regular word views
+                for (let i = start + 1; i < end; i++) {
+                    if (words[i].newParagraph) {
+                        end = i;
+                        break;
+                    }
+                }
+            }
+            
+            let isNewParagraph = words[start].newParagraph;
+            let instructionText = '';
+            for (let i = start; i < end; i++) {
+                if (words[i].instructions) {
+                    instructionText = words[i].instructions;
+                    break;
+                }
+            }
+            
+            if (isNewParagraph) {
+                if (instructionText) {
+                    paragraphIndicator.innerHTML = `<div style="font-style: italic; color: #800020;">(${instructionText})</div>`;
+                } else {
+                    paragraphIndicator.innerHTML = '<div></div>';
+                }
+                paragraphIndicator.style.display = 'block';
+            }
+            
+            let showTranslit = false;
+            if (displayMode === 'both') {
+                showTranslit = true;
+            } else if (displayMode === 'practice' && practiceStep === 'both') {
+                showTranslit = true;
+            }
+            
+            const isFullSentence = wordsPerView === 'sentence';
+            
+            for (let i = start; i < end; i++) {
+                const word = words[i];
+                
+                const isLastWordInParagraph = (i === words.length - 1) || 
+                    (i < words.length - 1 && words[i + 1].newParagraph);
+                
+                const hebrewSpan = document.createElement('span');
+                hebrewSpan.className = 'hebrew-word';
+                if (isFullSentence) {
+                    hebrewSpan.classList.add('full-sentence');
+                }
+                hebrewSpan.textContent = isLastWordInParagraph ? word.h + '.' : word.h;
+                hebrewLine.appendChild(hebrewSpan);
+                
+                if (showTranslit) {
+                    const translitSpan = document.createElement('span');
+                    translitSpan.className = 'transliteration-word';
+                    if (isFullSentence) {
+                        translitSpan.classList.add('full-sentence');
+                    }
+                    translitSpan.textContent = isLastWordInParagraph ? word.at + '.' : word.at;
+                    translitLine.appendChild(translitSpan);
+                }
+            }
+            
+            document.getElementById('prevBtn').disabled = currentPosition === 0 && 
+                (displayMode !== 'practice' || practiceStep === 'hebrew');
+            document.getElementById('nextBtn').disabled = end >= words.length && 
+                (displayMode !== 'practice' || practiceStep === 'both');
+            
+            const currentWords = (start + 1 === end) ? `${start + 1}` : `${start + 1}-${end}`;
+            let progressText;
+            if (wordsPerView === 'sentence') {
+                const sentenceNum = findSentenceNumber(start);
+                const totalSentences = countTotalSentences();
+                progressText = `Sentence ${sentenceNum} of ${totalSentences}`;
+            } else {
+                progressText = (start + 1 === end) ? `Word ${currentWords} of ${words.length}` : `Words ${currentWords} of ${words.length}`;
+            }
+            if (displayMode === 'practice') {
+                progressText += practiceStep === 'hebrew' ? ' (Hebrew only)' : ' (with transliteration)';
+            }
+            document.getElementById('progress').textContent = progressText;
+        }
+        
+        function findSentenceNumber(position) {
+            const prayer = prayers[currentPrayer];
+            let sentenceNum = 1;
+            for (let i = 0; i < position; i++) {
+                if (prayer.words[i].newParagraph) {
+                    sentenceNum++;
+                }
+            }
+            return sentenceNum;
+        }
+        
+        function countTotalSentences() {
+            const prayer = prayers[currentPrayer];
+            let count = 1;
+            for (let i = 1; i < prayer.words.length; i++) {
+                if (prayer.words[i].newParagraph) {
+                    count++;
+                }
+            }
+            return count;
+        }
+        
+        function moveNext() {
+            if (!currentPrayer) return;
+            const prayer = prayers[currentPrayer];
+            
+            if (displayMode === 'practice') {
+                if (practiceStep === 'hebrew') {
+                    practiceStep = 'both';
+                    updateDisplay();
+                } else {
+                    let nextPos = findNextPosition();
+                    if (nextPos < prayer.words.length) {
+                        currentPosition = nextPos;
+                        practiceStep = 'hebrew';
+                        updateDisplay();
+                    }
+                }
+            } else {
+                let nextPos = findNextPosition();
+                if (nextPos < prayer.words.length) {
+                    currentPosition = nextPos;
+                    updateDisplay();
+                }
+            }
+        }
+        
+        function findNextPosition() {
+            const prayer = prayers[currentPrayer];
+            let nextPos = currentPosition;
+            
+            if (wordsPerView === 'sentence') {
+                // Move to next sentence (next newParagraph)
+                for (let i = currentPosition + 1; i < prayer.words.length; i++) {
+                    if (prayer.words[i].newParagraph) {
+                        return i;
+                    }
+                }
+                return prayer.words.length; // End of prayer
+            } else {
+                // Regular word-based navigation
+                for (let i = currentPosition + 1; i < prayer.words.length && i < currentPosition + parseInt(wordsPerView); i++) {
+                    if (prayer.words[i].newParagraph) {
+                        break;
+                    }
+                    nextPos = i;
+                }
+                return nextPos + 1;
+            }
+        }
+        
+        function movePrevious() {
+            if (!currentPrayer) return;
+            const prayer = prayers[currentPrayer];
+            
+            if (displayMode === 'practice') {
+                if (practiceStep === 'both') {
+                    practiceStep = 'hebrew';
+                    updateDisplay();
+                } else {
+                    if (currentPosition > 0) {
+                        let prevPos = findPreviousPosition();
+                        currentPosition = prevPos;
+                        practiceStep = 'both';
+                        updateDisplay();
+                    }
+                }
+            } else {
+                if (currentPosition > 0) {
+                    let prevPos = findPreviousPosition();
+                    currentPosition = prevPos;
+                    updateDisplay();
+                }
+            }
+        }
+        
+        function findPreviousPosition() {
+            if (wordsPerView === 'sentence') {
+                // Move to previous sentence
+                for (let i = currentPosition - 1; i >= 0; i--) {
+                    if (prayers[currentPrayer].words[i].newParagraph) {
+                        return i;
+                    }
+                }
+                return 0; // Beginning of prayer
+            } else {
+                // Regular word-based navigation
+                const prayer = prayers[currentPrayer];
+                let prevPos = Math.max(0, currentPosition - parseInt(wordsPerView));
+                
+                for (let i = prevPos; i < currentPosition; i++) {
+                    if (prayer.words[i].newParagraph && i > prevPos) {
+                        prevPos = i;
+                        break;
+                    }
+                }
+                return prevPos;
+            }
+        }
+        
+        function animateButtonClick(button) {
+            button.classList.add('clicked');
+            setTimeout(() => {
+                button.classList.remove('clicked');
+            }, 150);
+        }
+        
+        function handleKeyPress(e) {
+            if (document.getElementById('readerContainer').style.display === 'none') return;
+            
+            switch(e.key) {
+                case 'ArrowRight':
+                    moveNext();
+                    break;
+                case 'ArrowLeft':
+                    movePrevious();
+                    break;
+                case ' ':
+                    e.preventDefault();
+                    moveNext();
+                    break;
+                case 'Escape':
+                    showTOC();
+                    break;
+            }
+        }
+        
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            generateTOC();
+            
+            // Load settings on app start
+            loadSettings();
+            
+            // Restore scroll position if we're starting on the TOC
+            if (document.getElementById('tocContainer').style.display !== 'none') {
+                restoreScrollPosition();
+            }
+            
+            // Save scroll position when user scrolls on TOC
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                // Only save scroll position when TOC is visible
+                if (document.getElementById('tocContainer').style.display !== 'none') {
+                    // Debounce scroll saving to avoid too frequent saves
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(saveScrollPosition, 150);
+                }
+            });
+            
+            document.getElementById('prevBtn').addEventListener('click', (e) => {
+                animateButtonClick(e.target);
+                movePrevious();
+            });
+            
+            document.getElementById('nextBtn').addEventListener('click', (e) => {
+                animateButtonClick(e.target);
+                moveNext();
+            });
+            
+            document.getElementById('displayMode').addEventListener('change', (e) => {
+                displayMode = e.target.value;
+                practiceStep = 'hebrew';
+                saveSettings();
+                updateDisplay();
+            });
+            
+            document.getElementById('wordsPerView').addEventListener('change', (e) => {
+                wordsPerView = e.target.value;
+                currentPosition = Math.floor(currentPosition / (parseInt(wordsPerView) || 1)) * (parseInt(wordsPerView) || 1);
+                practiceStep = 'hebrew';
+                saveSettings();
+                updateDisplay();
+            });
+            
+            document.addEventListener('keydown', handleKeyPress);
+        });
+    </script>
+</body>
+</html>
