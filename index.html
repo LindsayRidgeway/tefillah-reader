@@ -494,6 +494,7 @@
     <script src="shema-prayers.js"></script>
     <script src="amidah-blessings.js"></script>
     <script src="psalm27-prayers.js"></script>
+    <script src="food-blessings.js"></script>
     <script src="translations.js"></script>
     
     <script>
@@ -503,7 +504,9 @@
             ...ritualItems,
             ...shemaPrayers,
             ...amidahBlessings,
-            ...psalmPrayers
+            ...psalmPrayers,
+            ...foodBlessings,
+            ...afterMealBlessings
         };
 
         Object.entries(prayerTranslations).forEach(([prayerKey, translations]) => {
@@ -521,6 +524,25 @@
                     wine: 'Sanctification over wine',
                     handwashing: 'Blessing for ritual hand washing',
                     bread: 'Blessing over bread'
+                }
+            },
+            'Food Blessings (Brachot)': {
+                prayers: ['bread', 'mezonot', 'wine', 'haetz', 'haadamah', 'shehakol'],
+                descriptions: {
+                    bread: 'Blessing over bread',
+                    mezonot: 'Blessing for grain foods',
+                    wine: 'Blessing over wine or grape juice',
+                    haetz: 'Blessing for tree fruit',
+                    haadamah: 'Blessing for produce from the ground',
+                    shehakol: 'Blessing for other foods and drinks'
+                }
+            },
+            'Grace After Meals': {
+                prayers: ['birkat_hamazon', 'al_hamichyah', 'borei_nefashot'],
+                descriptions: {
+                    birkat_hamazon: 'Grace after a meal with bread',
+                    al_hamichyah: 'After-blessing for grain foods',
+                    borei_nefashot: 'After-blessing for other foods and drinks'
                 }
             },
             'Ritual Items': {

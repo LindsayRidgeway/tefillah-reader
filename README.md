@@ -6,10 +6,12 @@
 
 - **Pure HTML/CSS/JavaScript** – no dependencies, no server-side code  
 - **No installation required** – runs locally or via [Netlify](https://tefillah-reader.netlify.app)  
-- **Supports four categories of Jewish prayers:**
+- **Supports multiple categories of Jewish prayers and blessings:**
   - *Shema Prayers*
   - *Amidah Blessings*
   - *Sabbath Blessings*
+  - *Food Blessings*
+  - *Grace After Meals*
   - *Ritual Items (miscellaneous)*
   - *Tehillim*
 - **Simple practice controls:**
@@ -27,6 +29,7 @@ This is a single-page app. All logic and data reside in the following files:
 - `shema-prayers.js` – Word-by-word structure for Shema-related prayers  
 - `amidah-blessings.js` – Word-by-word Amidah blessings  
 - `sabbath-blessings.js` – Prayers for Sabbath meals and rituals  
+- `food-blessings.js` – Food blessings and common after-blessings
 - `ritual-items.js` – Hebrew words for ritual objects (educational/fun category)  
 - `psalm27-prayers.js` – Word-by-word Psalm 27 reading
 - `translations.js` – Optional paragraph- and verse-level English translations
