@@ -194,7 +194,8 @@ const shemaPrayers = {
             { h: "וּבְקוּמֶךָ", at: "u'v'kumecho" },
             
             // Sixth sentence
-            { h: "וּקְשַׁרְתָּם", at: "U'k'shartom", newParagraph: true },
+            { h: "וּקְשַׁרְתָּם", at: "U'k'shartom", newParagraph: true,
+		        instructions: "Touch the tefillin on the arm and head." },
             { h: "לְאוֹת", at: "l'os" },
             { h: "עַל", at: "al" },
             { h: "יָדֶךָ", at: "yodecho" },
