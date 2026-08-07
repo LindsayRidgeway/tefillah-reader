@@ -415,6 +415,7 @@
     <script src="ritual-items.js"></script>
     <script src="shema-prayers.js"></script>
     <script src="amidah-blessings.js"></script>
+    <script src="psalm27-prayers.js"></script>
     
     <script>
         // Combine all prayer objects into one
@@ -422,7 +423,8 @@
             ...sabbathBlessings,
             ...ritualItems,
             ...shemaPrayers,
-            ...amidahBlessings
+            ...amidahBlessings,
+            ...psalmPrayers
         };
         
         // Prayer categories for organizing TOC
@@ -476,6 +478,12 @@
                     avodah: 'Be favorable toward Your people',
                     hodaah: 'We gratefully thank You',
                     shalom: 'Grant peace, goodness and blessing'
+                }
+            },
+            'Tehillim': {
+                prayers: ['psalm_27'],
+                descriptions: {
+                    psalm_27: 'L\'Dovid - The Lord is my light and my salvation'
                 }
             }
         };

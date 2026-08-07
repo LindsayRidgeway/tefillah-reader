@@ -11,6 +11,7 @@
   - *Amidah Blessings*
   - *Sabbath Blessings*
   - *Ritual Items (miscellaneous)*
+  - *Tehillim*
 - **Simple practice controls:**
   - Toggle between *Normal* and *Challenge* mode
   - Set how many words appear at once
@@ -26,6 +27,7 @@ This is a single-page app. All logic and data reside in the following files:
 - `amidah-blessings.js` – Word-by-word Amidah blessings  
 - `sabbath-blessings.js` – Prayers for Sabbath meals and rituals  
 - `ritual-items.js` – Hebrew words for ritual objects (educational/fun category)  
+- `psalm27-prayers.js` – Word-by-word Psalm 27 reading
 
 ## 🔧 Customization & Extensions
 
