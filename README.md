@@ -14,6 +14,7 @@
   - *Tehillim*
 - **Simple practice controls:**
   - Toggle between *Normal* and *Challenge* mode
+  - Show optional paragraph- or verse-level English translations
   - Set how many words appear at once
   - Step forward and backward through each prayer
 - **Ashkenazi transliteration** throughout, suitable for most North American learners
@@ -28,6 +29,7 @@ This is a single-page app. All logic and data reside in the following files:
 - `sabbath-blessings.js` – Prayers for Sabbath meals and rituals  
 - `ritual-items.js` – Hebrew words for ritual objects (educational/fun category)  
 - `psalm27-prayers.js` – Word-by-word Psalm 27 reading
+- `translations.js` – Optional paragraph- and verse-level English translations
 
 ## 🔧 Customization & Extensions
 

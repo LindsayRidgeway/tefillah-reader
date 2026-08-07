@@ -223,6 +223,19 @@
             gap: 2rem;
             flex-wrap: wrap;
         }
+
+        .translation-line {
+            max-width: 640px;
+            margin: 0.75rem auto 0;
+            color: #5f6872;
+            font-size: 1rem;
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        .translation-line:empty {
+            display: none;
+        }
         
         .transliteration-word {
             font-size: 1.5rem;
@@ -384,6 +397,13 @@
                     </select>
                 </div>
                 <div class="setting-group">
+                    <label for="translationMode">Translation:</label>
+                    <select id="translationMode">
+                        <option value="off" selected>Off</option>
+                        <option value="on">On</option>
+                    </select>
+                </div>
+                <div class="setting-group">
                     <label for="wordsPerView">Words per view:</label>
                     <select id="wordsPerView">
                         <option value="1">1</option>
@@ -400,6 +420,7 @@
                 <div id="paragraphIndicator" style="text-align: center;"></div>
                 <div class="hebrew-line" id="hebrewLine"></div>
                 <div class="transliteration-line" id="translitLine"></div>
+                <div class="translation-line" id="translationLine"></div>
             </div>
             
             <div class="controls">
@@ -416,6 +437,7 @@
     <script src="shema-prayers.js"></script>
     <script src="amidah-blessings.js"></script>
     <script src="psalm27-prayers.js"></script>
+    <script src="translations.js"></script>
     
     <script>
         // Combine all prayer objects into one
@@ -426,6 +448,12 @@
             ...amidahBlessings,
             ...psalmPrayers
         };
+
+        Object.entries(prayerTranslations).forEach(([prayerKey, translations]) => {
+            if (prayers[prayerKey]) {
+                prayers[prayerKey].translations = translations;
+            }
+        });
         
         // Prayer categories for organizing TOC
         const prayerCategories = {
@@ -493,6 +521,7 @@
         let currentPosition = 0;
         let wordsPerView = 3;
         let displayMode = 'practice';
+        let translationMode = 'off';
         let practiceStep = 'hebrew';
         
         // Generate TOC dynamically
@@ -623,6 +652,11 @@
                         wordsPerView = settings.wordsPerView;
                         document.getElementById('wordsPerView').value = wordsPerView;
                     }
+
+                    if (settings.translationMode) {
+                        translationMode = settings.translationMode;
+                        document.getElementById('translationMode').value = translationMode;
+                    }
                 }
             } catch (e) {
                 console.log('Could not load saved settings');
@@ -634,7 +668,8 @@
             try {
                 const settings = {
                     displayMode: displayMode,
-                    wordsPerView: wordsPerView
+                    wordsPerView: wordsPerView,
+                    translationMode: translationMode
                 };
                 localStorage.setItem('tefillaReaderSettings', JSON.stringify(settings));
             } catch (e) {
@@ -650,10 +685,12 @@
             
             const hebrewLine = document.getElementById('hebrewLine');
             const translitLine = document.getElementById('translitLine');
+            const translationLine = document.getElementById('translationLine');
             const paragraphIndicator = document.getElementById('paragraphIndicator');
             
             hebrewLine.innerHTML = '';
             translitLine.innerHTML = '';
+            translationLine.innerHTML = '';
             paragraphIndicator.innerHTML = '';
             paragraphIndicator.style.display = 'none';
             
@@ -703,6 +740,13 @@
                 showTranslit = true;
             } else if (displayMode === 'practice' && practiceStep === 'both') {
                 showTranslit = true;
+            }
+
+            const showTranslation = translationMode === 'on' &&
+                (displayMode !== 'practice' || practiceStep === 'both');
+            const translationText = getCurrentTranslation(start);
+            if (showTranslation && translationText) {
+                translationLine.textContent = translationText;
             }
             
             const isFullSentence = wordsPerView === 'sentence';
@@ -761,6 +805,14 @@
                 }
             }
             return sentenceNum;
+        }
+
+        function getCurrentTranslation(position) {
+            const prayer = prayers[currentPrayer];
+            if (!prayer || !prayer.translations) return '';
+
+            const segmentIndex = findSentenceNumber(position) - 1;
+            return prayer.translations[segmentIndex] || '';
         }
         
         function countTotalSentences() {
@@ -935,6 +987,12 @@
             document.getElementById('displayMode').addEventListener('change', (e) => {
                 displayMode = e.target.value;
                 practiceStep = 'hebrew';
+                saveSettings();
+                updateDisplay();
+            });
+
+            document.getElementById('translationMode').addEventListener('change', (e) => {
+                translationMode = e.target.value;
                 saveSettings();
                 updateDisplay();
             });
