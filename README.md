@@ -11,7 +11,6 @@
   - *Amidah Blessings*
   - *Sabbath Blessings*
   - *Food Blessings*
-  - *Grace After Meals*
   - *Ritual Items (miscellaneous)*
   - *Tehillim*
 - **Simple practice controls:**

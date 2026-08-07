@@ -1,517 +1,62 @@
-// Food blessings and common after-blessings.
-function makeReading(segments) {
-    return segments.flatMap(segment =>
-        segment.map(([h, at], index) => ({
-            h,
-            at,
-            ...(index === 0 ? { newParagraph: true } : {})
-        }))
-    );
-}
-
+// Food Blessings - blessings before eating everyday foods
 const foodBlessings = {
     mezonot: {
         title: "Mezonot",
-        words: makeReading([[
-            ["בָּרוּךְ", "Boruch"],
-            ["אַתָּה", "atoh"],
-            ["יְיָ", "Adonai"],
-            ["אֱלֹהֵינוּ", "Eloheinu"],
-            ["מֶלֶךְ", "melech"],
-            ["הָעוֹלָם", "ho'olom"],
-            ["בּוֹרֵא", "borei"],
-            ["מִינֵי", "minei"],
-            ["מְזוֹנוֹת", "m'zonos"]
-        ]])
+        words: [
+            { h: "בָּרוּךְ", at: "Boruch", newParagraph: true },
+            { h: "אַתָּה", at: "atoh" },
+            { h: "יְיָ", at: "Adonai" },
+            { h: "אֱלֹהֵינוּ", at: "Eloheinu" },
+            { h: "מֶלֶךְ", at: "melech" },
+            { h: "הָעוֹלָם", at: "ho'olom" },
+            { h: "בּוֹרֵא", at: "borei" },
+            { h: "מִינֵי", at: "minei" },
+            { h: "מְזוֹנוֹת", at: "m'zonos" }
+        ]
     },
 
     haetz: {
         title: "Borei Pri Ha'etz",
-        words: makeReading([[
-            ["בָּרוּךְ", "Boruch"],
-            ["אַתָּה", "atoh"],
-            ["יְיָ", "Adonai"],
-            ["אֱלֹהֵינוּ", "Eloheinu"],
-            ["מֶלֶךְ", "melech"],
-            ["הָעוֹלָם", "ho'olom"],
-            ["בּוֹרֵא", "borei"],
-            ["פְּרִי", "p'ri"],
-            ["הָעֵץ", "ho'eitz"]
-        ]])
+        words: [
+            { h: "בָּרוּךְ", at: "Boruch", newParagraph: true },
+            { h: "אַתָּה", at: "atoh" },
+            { h: "יְיָ", at: "Adonai" },
+            { h: "אֱלֹהֵינוּ", at: "Eloheinu" },
+            { h: "מֶלֶךְ", at: "melech" },
+            { h: "הָעוֹלָם", at: "ho'olom" },
+            { h: "בּוֹרֵא", at: "borei" },
+            { h: "פְּרִי", at: "p'ri" },
+            { h: "הָעֵץ", at: "ho'eitz" }
+        ]
     },
 
     haadamah: {
         title: "Borei Pri Ha'adamah",
-        words: makeReading([[
-            ["בָּרוּךְ", "Boruch"],
-            ["אַתָּה", "atoh"],
-            ["יְיָ", "Adonai"],
-            ["אֱלֹהֵינוּ", "Eloheinu"],
-            ["מֶלֶךְ", "melech"],
-            ["הָעוֹלָם", "ho'olom"],
-            ["בּוֹרֵא", "borei"],
-            ["פְּרִי", "p'ri"],
-            ["הָאֲדָמָה", "ho'adomoh"]
-        ]])
+        words: [
+            { h: "בָּרוּךְ", at: "Boruch", newParagraph: true },
+            { h: "אַתָּה", at: "atoh" },
+            { h: "יְיָ", at: "Adonai" },
+            { h: "אֱלֹהֵינוּ", at: "Eloheinu" },
+            { h: "מֶלֶךְ", at: "melech" },
+            { h: "הָעוֹלָם", at: "ho'olom" },
+            { h: "בּוֹרֵא", at: "borei" },
+            { h: "פְּרִי", at: "p'ri" },
+            { h: "הָאֲדָמָה", at: "ho'adomoh" }
+        ]
     },
 
     shehakol: {
         title: "Shehakol",
-        words: makeReading([[
-            ["בָּרוּךְ", "Boruch"],
-            ["אַתָּה", "atoh"],
-            ["יְיָ", "Adonai"],
-            ["אֱלֹהֵינוּ", "Eloheinu"],
-            ["מֶלֶךְ", "melech"],
-            ["הָעוֹלָם", "ho'olom"],
-            ["שֶׁהַכֹּל", "shehakol"],
-            ["נִהְיָה", "nihyeh"],
-            ["בִּדְבָרוֹ", "bid'voro"]
-        ]])
+        words: [
+            { h: "בָּרוּךְ", at: "Boruch", newParagraph: true },
+            { h: "אַתָּה", at: "atoh" },
+            { h: "יְיָ", at: "Adonai" },
+            { h: "אֱלֹהֵינוּ", at: "Eloheinu" },
+            { h: "מֶלֶךְ", at: "melech" },
+            { h: "הָעוֹלָם", at: "ho'olom" },
+            { h: "שֶׁהַכֹּל", at: "shehakol" },
+            { h: "נִהְיָה", at: "nihyeh" },
+            { h: "בִּדְבָרוֹ", at: "bid'voro" }
+        ]
     }
 };
-
-const afterMealBlessings = {
-    borei_nefashot: {
-        title: "Borei Nefashot",
-        words: makeReading([[
-            ["בָּרוּךְ", "Boruch"],
-            ["אַתָּה", "atoh"],
-            ["יְיָ", "Adonai"],
-            ["אֱלֹהֵינוּ", "Eloheinu"],
-            ["מֶלֶךְ", "melech"],
-            ["הָעוֹלָם", "ho'olom"],
-            ["בּוֹרֵא", "borei"],
-            ["נְפָשׁוֹת", "n'fashos"],
-            ["רַבּוֹת", "rabos"],
-            ["וְחֶסְרוֹנָן", "v'chesronon"],
-            ["עַל", "al"],
-            ["כָּל", "kol"],
-            ["מַה", "mah"],
-            ["שֶּׁבָּרָאתָ", "sheboroso"],
-            ["לְהַחֲיוֹת", "l'hachayos"],
-            ["בָּהֶם", "bohem"],
-            ["נֶפֶשׁ", "nefesh"],
-            ["כָּל", "kol"],
-            ["חָי", "chai"],
-            ["בָּרוּךְ", "Boruch"],
-            ["חֵי", "chei"],
-            ["הָעוֹלָמִים", "ho'olomim"]
-        ]])
-    },
-
-    al_hamichyah: {
-        title: "Al Hamichyah",
-        words: makeReading([
-            [
-                ["בָּרוּךְ", "Boruch"],
-                ["אַתָּה", "atoh"],
-                ["יְיָ", "Adonai"],
-                ["אֱלֹהֵינוּ", "Eloheinu"],
-                ["מֶלֶךְ", "melech"],
-                ["הָעוֹלָם", "ho'olom"],
-                ["עַל", "al"],
-                ["הַמִּחְיָה", "hamichyoh"],
-                ["וְעַל", "v'al"],
-                ["הַכַּלְכָּלָה", "hakalkoloh"]
-            ],
-            [
-                ["וְעַל", "V'al"],
-                ["תְּנוּבַת", "t'nuvas"],
-                ["הַשָּׂדֶה", "hasodeh"],
-                ["וְעַל", "v'al"],
-                ["אֶרֶץ", "eretz"],
-                ["חֶמְדָּה", "chemdoh"],
-                ["טוֹבָה", "tovoh"],
-                ["וּרְחָבָה", "u'rchovoh"],
-                ["שֶׁרָצִיתָ", "sherotziso"],
-                ["וְהִנְחַלְתָּ", "v'hinchalto"],
-                ["לַאֲבוֹתֵינוּ", "la'avoseinu"],
-                ["לֶאֱכוֹל", "le'echol"],
-                ["מִפִּרְיָהּ", "mipiryoh"],
-                ["וְלִשְׂבּוֹעַ", "v'lisboa"],
-                ["מִטּוּבָהּ", "mituvoh"]
-            ],
-            [
-                ["רַחֵם", "Racheim"],
-                ["נָא", "noh"],
-                ["יְיָ", "Adonai"],
-                ["אֱלֹהֵינוּ", "Eloheinu"],
-                ["עַל", "al"],
-                ["יִשְׂרָאֵל", "Yisroel"],
-                ["עַמֶּךָ", "amecho"],
-                ["וְעַל", "v'al"],
-                ["יְרוּשָׁלַיִם", "Yerushalayim"],
-                ["עִירֶךָ", "irecho"],
-                ["וְעַל", "v'al"],
-                ["צִיּוֹן", "Tziyon"],
-                ["מִשְׁכַּן", "mishkan"],
-                ["כְּבוֹדֶךָ", "k'vodecho"],
-                ["וְעַל", "v'al"],
-                ["מִזְבְּחֶךָ", "mizb'checho"],
-                ["וְעַל", "v'al"],
-                ["הֵיכָלֶךָ", "heicholecho"]
-            ],
-            [
-                ["וּבְנֵה", "Uv'nei"],
-                ["יְרוּשָׁלַיִם", "Yerushalayim"],
-                ["עִיר", "ir"],
-                ["הַקֹּדֶשׁ", "hakodesh"],
-                ["בִּמְהֵרָה", "bimheiroh"],
-                ["בְיָמֵינוּ", "v'yomeinu"],
-                ["וְהַעֲלֵנוּ", "v'ha'aleinu"],
-                ["לְתוֹכָהּ", "l'sochoh"],
-                ["וְשַׂמְּחֵנוּ", "v'sam'cheinu"],
-                ["בָּהּ", "voh"],
-                ["וּנְבָרֶכְךָ", "u'n'vorech'cho"],
-                ["בִּקְדֻשָּׁה", "bikdushah"],
-                ["וּבְטָהֳרָה", "u'v'tahoroh"]
-            ],
-            [
-                ["כִּי", "Ki"],
-                ["אַתָּה", "atoh"],
-                ["יְיָ", "Adonai"],
-                ["טוֹב", "tov"],
-                ["וּמֵטִיב", "u'meitiv"],
-                ["לַכֹּל", "lakol"],
-                ["וְנוֹדֶה", "v'nodeh"],
-                ["לְּךָ", "l'cho"],
-                ["עַל", "al"],
-                ["הָאָרֶץ", "ho'oretz"],
-                ["וְעַל", "v'al"],
-                ["הַמִּחְיָה", "hamichyoh"],
-                ["בָּרוּךְ", "Boruch"],
-                ["אַתָּה", "atoh"],
-                ["יְיָ", "Adonai"],
-                ["עַל", "al"],
-                ["הָאָרֶץ", "ho'oretz"],
-                ["וְעַל", "v'al"],
-                ["הַמִּחְיָה", "hamichyoh"]
-            ]
-        ])
-    },
-
-    birkat_hamazon: {
-        title: "Birkat Hamazon",
-        words: makeReading([
-            [
-                ["בָּרוּךְ", "Boruch"],
-                ["אַתָּה", "atoh"],
-                ["יְיָ", "Adonai"],
-                ["אֱלֹהֵינוּ", "Eloheinu"],
-                ["מֶלֶךְ", "melech"],
-                ["הָעוֹלָם", "ho'olom"],
-                ["הַזָּן", "hazon"],
-                ["אֶת", "es"],
-                ["הָעוֹלָם", "ho'olom"],
-                ["כֻּלּוֹ", "kulo"],
-                ["בְּטוּבוֹ", "b'tuvo"],
-                ["בְּחֵן", "b'chein"],
-                ["בְּחֶסֶד", "b'chesed"],
-                ["וּבְרַחֲמִים", "u'vrachamim"]
-            ],
-            [
-                ["הוּא", "Hu"],
-                ["נוֹתֵן", "nosein"],
-                ["לֶחֶם", "lechem"],
-                ["לְכָל", "l'chol"],
-                ["בָּשָׂר", "bosor"],
-                ["כִּי", "ki"],
-                ["לְעוֹלָם", "l'olom"],
-                ["חַסְדּוֹ", "chasdo"]
-            ],
-            [
-                ["וּבְטוּבוֹ", "Uv'tuvo"],
-                ["הַגָּדוֹל", "hagodol"],
-                ["עִמָּנוּ", "imonu"],
-                ["תָּמִיד", "tomid"],
-                ["לֹא", "lo"],
-                ["חָסֵר", "choseir"],
-                ["לָנוּ", "lonu"],
-                ["וְאַל", "v'al"],
-                ["יֶחְסַר", "yechsar"],
-                ["לָנוּ", "lonu"],
-                ["מָזוֹן", "mozon"],
-                ["לְעוֹלָם", "l'olom"],
-                ["וָעֶד", "vo'ed"]
-            ],
-            [
-                ["בַּעֲבוּר", "Ba'avur"],
-                ["שְׁמוֹ", "sh'mo"],
-                ["הַגָּדוֹל", "hagodol"],
-                ["כִּי", "ki"],
-                ["הוּא", "hu"],
-                ["אֵל", "Eil"],
-                ["זָן", "zon"],
-                ["וּמְפַרְנֵס", "u'm'farneis"],
-                ["לַכֹּל", "lakol"],
-                ["וּמֵטִיב", "u'meitiv"],
-                ["לַכֹּל", "lakol"],
-                ["וּמֵכִין", "u'meichin"],
-                ["מָזוֹן", "mozon"],
-                ["לְכָל", "l'chol"],
-                ["בְּרִיּוֹתָיו", "b'riyosov"],
-                ["אֲשֶׁר", "asher"],
-                ["בָּרָא", "boro"]
-            ],
-            [
-                ["כָּאָמוּר", "Ko'omur"],
-                ["פּוֹתֵחַ", "posei'ach"],
-                ["אֶת", "es"],
-                ["יָדֶךָ", "yodecho"],
-                ["וּמַשְׂבִּיעַ", "u'masbia"],
-                ["לְכָל", "l'chol"],
-                ["חַי", "chai"],
-                ["רָצוֹן", "rotzon"],
-                ["בָּרוּךְ", "Boruch"],
-                ["אַתָּה", "atoh"],
-                ["יְיָ", "Adonai"],
-                ["הַזָּן", "hazon"],
-                ["אֶת", "es"],
-                ["הַכֹּל", "hakol"]
-            ],
-            [
-                ["נוֹדֶה", "Nodeh"],
-                ["לְּךָ", "l'cho"],
-                ["יְיָ", "Adonai"],
-                ["אֱלֹהֵינוּ", "Eloheinu"],
-                ["עַל", "al"],
-                ["שֶׁהִנְחַלְתָּ", "shehinchalto"],
-                ["לַאֲבוֹתֵינוּ", "la'avoseinu"],
-                ["אֶרֶץ", "eretz"],
-                ["חֶמְדָּה", "chemdoh"],
-                ["טוֹבָה", "tovoh"],
-                ["וּרְחָבָה", "u'rchovoh"]
-            ],
-            [
-                ["וְעַל", "V'al"],
-                ["שֶׁהוֹצֵאתָנוּ", "shehotzeisonu"],
-                ["יְיָ", "Adonai"],
-                ["אֱלֹהֵינוּ", "Eloheinu"],
-                ["מֵאֶרֶץ", "mei'eretz"],
-                ["מִצְרַיִם", "Mitzrayim"],
-                ["וּפְדִיתָנוּ", "u'f'disonu"],
-                ["מִבֵּית", "mibeis"],
-                ["עֲבָדִים", "avodim"]
-            ],
-            [
-                ["וְעַל", "V'al"],
-                ["בְּרִיתְךָ", "b'ris'cho"],
-                ["שֶׁחָתַמְתָּ", "shechosamto"],
-                ["בִּבְשָׂרֵנוּ", "bivsoreinu"],
-                ["וְעַל", "v'al"],
-                ["תּוֹרָתְךָ", "toros'cho"],
-                ["שֶׁלִּמַּדְתָּנוּ", "shelimadtonu"],
-                ["וְעַל", "v'al"],
-                ["חֻקֶּיךָ", "chukecho"],
-                ["שֶׁהוֹדַעְתָּנוּ", "shehodaatonu"]
-            ],
-            [
-                ["וְעַל", "V'al"],
-                ["חַיִּים", "chayim"],
-                ["חֵן", "chein"],
-                ["וָחֶסֶד", "vochesed"],
-                ["שֶׁחוֹנַנְתָּנוּ", "shechonantonu"],
-                ["וְעַל", "v'al"],
-                ["אֲכִילַת", "achilas"],
-                ["מָזוֹן", "mozon"],
-                ["שָׁאַתָּה", "sho'atoh"],
-                ["זָן", "zon"],
-                ["וּמְפַרְנֵס", "u'm'farneis"],
-                ["אוֹתָנוּ", "osonu"],
-                ["תָּמִיד", "tomid"],
-                ["בְּכָל", "b'chol"],
-                ["יוֹם", "yom"],
-                ["וּבְכָל", "u'v'chol"],
-                ["עֵת", "eis"],
-                ["וּבְכָל", "u'v'chol"],
-                ["שָׁעָה", "sho'oh"]
-            ],
-            [
-                ["וְעַל", "V'al"],
-                ["הַכֹּל", "hakol"],
-                ["יְיָ", "Adonai"],
-                ["אֱלֹהֵינוּ", "Eloheinu"],
-                ["אֲנַחְנוּ", "anachnu"],
-                ["מוֹדִים", "modim"],
-                ["לָךְ", "loch"],
-                ["וּמְבָרְכִים", "u'm'vorchim"],
-                ["אוֹתָךְ", "osoch"],
-                ["יִתְבָּרַךְ", "yisborach"],
-                ["שִׁמְךָ", "shimcho"],
-                ["בְּפִי", "b'fi"],
-                ["כָל", "chol"],
-                ["חַי", "chai"],
-                ["תָּמִיד", "tomid"],
-                ["לְעוֹלָם", "l'olom"],
-                ["וָעֶד", "vo'ed"]
-            ],
-            [
-                ["כַּכָּתוּב", "Kakosuv"],
-                ["וְאָכַלְתָּ", "v'ochalto"],
-                ["וְשָׂבָעְתָּ", "v'sovoto"],
-                ["וּבֵרַכְתָּ", "u'veirachto"],
-                ["אֶת", "es"],
-                ["יְיָ", "Adonai"],
-                ["אֱלֹהֶיךָ", "Elohecho"],
-                ["עַל", "al"],
-                ["הָאָרֶץ", "ho'oretz"],
-                ["הַטֹּבָה", "hatovoh"],
-                ["אֲשֶׁר", "asher"],
-                ["נָתַן", "nosan"],
-                ["לָךְ", "loch"],
-                ["בָּרוּךְ", "Boruch"],
-                ["אַתָּה", "atoh"],
-                ["יְיָ", "Adonai"],
-                ["עַל", "al"],
-                ["הָאָרֶץ", "ho'oretz"],
-                ["וְעַל", "v'al"],
-                ["הַמָּזוֹן", "hamozon"]
-            ],
-            [
-                ["רַחֵם", "Racheim"],
-                ["נָא", "noh"],
-                ["יְיָ", "Adonai"],
-                ["אֱלֹהֵינוּ", "Eloheinu"],
-                ["עַל", "al"],
-                ["יִשְׂרָאֵל", "Yisroel"],
-                ["עַמֶּךָ", "amecho"],
-                ["וְעַל", "v'al"],
-                ["יְרוּשָׁלַיִם", "Yerushalayim"],
-                ["עִירֶךָ", "irecho"],
-                ["וְעַל", "v'al"],
-                ["צִיּוֹן", "Tziyon"],
-                ["מִשְׁכַּן", "mishkan"],
-                ["כְּבוֹדֶךָ", "k'vodecho"]
-            ],
-            [
-                ["וְעַל", "V'al"],
-                ["מַלְכוּת", "malchus"],
-                ["בֵּית", "beis"],
-                ["דָּוִד", "Dovid"],
-                ["מְשִׁיחֶךָ", "m'shichecho"],
-                ["וְעַל", "v'al"],
-                ["הַבַּיִת", "habayis"],
-                ["הַגָּדוֹל", "hagodol"],
-                ["וְהַקָּדוֹשׁ", "v'hakodosh"],
-                ["שֶׁנִּקְרָא", "shenikro"],
-                ["שִׁמְךָ", "shimcho"],
-                ["עָלָיו", "olov"]
-            ],
-            [
-                ["אֱלֹהֵינוּ", "Eloheinu"],
-                ["אָבִינוּ", "Ovinu"],
-                ["רְעֵנוּ", "r'einu"],
-                ["זוּנֵנוּ", "zuneinu"],
-                ["פַּרְנְסֵנוּ", "parn'seinu"],
-                ["וְכַלְכְּלֵנוּ", "v'chal'k'leinu"],
-                ["וְהַרְוִיחֵנוּ", "v'harvicheinu"],
-                ["וְהַרְוַח", "v'harvach"],
-                ["לָנוּ", "lonu"],
-                ["יְיָ", "Adonai"],
-                ["אֱלֹהֵינוּ", "Eloheinu"],
-                ["מְהֵרָה", "m'heiroh"],
-                ["מִכָּל", "mikol"],
-                ["צָרוֹתֵינוּ", "tzoroseinu"]
-            ],
-            [
-                ["וְנָא", "V'noh"],
-                ["אַל", "al"],
-                ["תַּצְרִיכֵנוּ", "tatzricheinu"],
-                ["יְיָ", "Adonai"],
-                ["אֱלֹהֵינוּ", "Eloheinu"],
-                ["לֹא", "lo"],
-                ["לִידֵי", "lidei"],
-                ["מַתְּנַת", "mat'nas"],
-                ["בָּשָׂר", "bosor"],
-                ["וָדָם", "vodom"],
-                ["וְלֹא", "v'lo"],
-                ["לִידֵי", "lidei"],
-                ["הַלְוָאָתָם", "halvo'osom"],
-                ["כִּי", "ki"],
-                ["אִם", "im"],
-                ["לְיָדְךָ", "l'yod'cho"],
-                ["הַמְּלֵאָה", "ham'lei'oh"],
-                ["הַפְּתוּחָה", "hap'suchoh"],
-                ["הַקְּדוֹשָׁה", "hak'doshoh"],
-                ["וְהָרְחָבָה", "v'horchovoh"]
-            ],
-            [
-                ["וּבְנֵה", "Uv'nei"],
-                ["יְרוּשָׁלַיִם", "Yerushalayim"],
-                ["עִיר", "ir"],
-                ["הַקֹּדֶשׁ", "hakodesh"],
-                ["בִּמְהֵרָה", "bimheiroh"],
-                ["בְיָמֵינוּ", "v'yomeinu"],
-                ["בָּרוּךְ", "Boruch"],
-                ["אַתָּה", "atoh"],
-                ["יְיָ", "Adonai"],
-                ["בּוֹנֵה", "boneh"],
-                ["בְרַחֲמָיו", "v'rachamov"],
-                ["יְרוּשָׁלָיִם", "Yerushalayim"],
-                ["אָמֵן", "omein"]
-            ],
-            [
-                ["בָּרוּךְ", "Boruch"],
-                ["אַתָּה", "atoh"],
-                ["יְיָ", "Adonai"],
-                ["אֱלֹהֵינוּ", "Eloheinu"],
-                ["מֶלֶךְ", "melech"],
-                ["הָעוֹלָם", "ho'olom"],
-                ["הָאֵל", "ho'Eil"],
-                ["אָבִינוּ", "Ovinu"],
-                ["מַלְכֵּנוּ", "malkeinu"],
-                ["אַדִּירֵנוּ", "adireinu"],
-                ["בּוֹרְאֵנוּ", "bor'einu"],
-                ["גּוֹאֲלֵנוּ", "go'aleinu"],
-                ["יוֹצְרֵנוּ", "yotz'reinu"],
-                ["קְדוֹשׁ", "k'dosh"],
-                ["יַעֲקֹב", "Yaakov"]
-            ],
-            [
-                ["הַמֶּלֶךְ", "Hamelech"],
-                ["הַטּוֹב", "hatov"],
-                ["וְהַמֵּטִיב", "v'hameitiv"],
-                ["לַכֹּל", "lakol"],
-                ["שֶׁבְּכָל", "sheb'chol"],
-                ["יוֹם", "yom"],
-                ["וָיוֹם", "voyom"],
-                ["הוּא", "hu"],
-                ["הֵטִיב", "heitiv"],
-                ["הוּא", "hu"],
-                ["מֵטִיב", "meitiv"],
-                ["הוּא", "hu"],
-                ["יֵיטִיב", "yeitiv"],
-                ["לָנוּ", "lonu"]
-            ],
-            [
-                ["הוּא", "Hu"],
-                ["גְמָלָנוּ", "g'molonu"],
-                ["הוּא", "hu"],
-                ["גוֹמְלֵנוּ", "gom'leinu"],
-                ["הוּא", "hu"],
-                ["יִגְמְלֵנוּ", "yig'm'leinu"],
-                ["לָעַד", "lo'ad"],
-                ["לְחֵן", "l'chein"],
-                ["וּלְחֶסֶד", "u'l'chesed"],
-                ["וּלְרַחֲמִים", "u'l'rachamim"],
-                ["וּלְרֶוַח", "u'l'revach"],
-                ["הַצָּלָה", "hatzoloh"],
-                ["וְהַצְלָחָה", "v'hatzlochoh"],
-                ["בְּרָכָה", "b'rochoh"],
-                ["וִישׁוּעָה", "vishu'oh"],
-                ["נֶחָמָה", "nechomoh"],
-                ["פַּרְנָסָה", "parnosoh"],
-                ["וְכַלְכָּלָה", "v'chalkoloh"],
-                ["וְרַחֲמִים", "v'rachamim"],
-                ["וְחַיִּים", "v'chayim"],
-                ["וְשָׁלוֹם", "v'sholom"],
-                ["וְכָל", "v'chol"],
-                ["טוֹב", "tov"]
-            ]
-        ])
-    }
-};
-
-afterMealBlessings.al_hamichyah.words[0].instructions = "Common grain-food version; omits Shabbat and holiday insertions.";
-afterMealBlessings.birkat_hamazon.words[0].instructions = "Weekday core text; omits zimun and special-day insertions.";

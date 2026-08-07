@@ -24,37 +24,6 @@ const prayerTranslations = {
     shehakol: [
         "Blessed are You, the Lord our God, Ruler of the universe, by whose word all things came to be."
     ],
-    borei_nefashot: [
-        "Blessed are You, the Lord our God, Ruler of the universe, who creates many living beings and what they lack, providing all that You created to sustain the life of every living thing. Blessed is the life of all worlds."
-    ],
-    al_hamichyah: [
-        "Blessed are You, the Lord our God, Ruler of the universe, for the nourishment and sustenance.",
-        "We thank You for the produce of the field and for the precious, good, and spacious land that You desired and gave to our ancestors, so that we may eat of its fruit and be satisfied with its goodness.",
-        "Have mercy, the Lord our God, on Israel Your people, on Jerusalem Your city, on Zion the dwelling place of Your glory, on Your altar, and on Your Temple.",
-        "Rebuild Jerusalem, the holy city, speedily in our days; bring us into it, gladden us in it, and may we bless You there in holiness and purity.",
-        "For You, the Lord, are good and do good to all; we thank You for the land and for the nourishment. Blessed are You, the Lord, for the land and for the nourishment."
-    ],
-    birkat_hamazon: [
-        "Blessed are You, the Lord our God, Ruler of the universe, who nourishes the whole world in goodness, with grace, kindness, and mercy.",
-        "God gives bread to all flesh, for His kindness lasts forever.",
-        "Through His great goodness to us, we have never lacked food; may we never lack food, for the sake of His great name.",
-        "For He is God who nourishes and sustains all, does good to all, and prepares food for all His creatures.",
-        "As it is said: You open Your hand and satisfy every living thing with favor. Blessed are You, the Lord, who nourishes all.",
-        "We thank You, the Lord our God, for giving our ancestors a precious, good, and spacious land.",
-        "We thank You for bringing us out of Egypt and redeeming us from the house of bondage.",
-        "We thank You for Your covenant sealed in our flesh, for Your Torah that You taught us, and for Your laws that You made known to us.",
-        "We thank You for life, grace, and kindness, and for the food with which You constantly nourish and sustain us every day, at every time and every hour.",
-        "For all this, the Lord our God, we thank and bless You. May Your name be blessed by every living being, always and forever.",
-        "As it is written: You shall eat, be satisfied, and bless the Lord your God for the good land He has given you. Blessed are You, the Lord, for the land and for the food.",
-        "Have mercy, the Lord our God, on Israel Your people, on Jerusalem Your city, and on Zion, the dwelling place of Your glory.",
-        "Have mercy on the kingdom of the house of David, Your anointed one, and on the great and holy house called by Your name.",
-        "Our God and Father, shepherd us, nourish us, sustain us, support us, give us relief, and quickly relieve us from all our troubles.",
-        "Please, the Lord our God, do not make us dependent on human gifts or loans, but only on Your full, open, holy, and generous hand.",
-        "Rebuild Jerusalem, the holy city, speedily in our days. Blessed are You, the Lord, who rebuilds Jerusalem in mercy. Amen.",
-        "Blessed are You, the Lord our God, Ruler of the universe, God, our Father, our King, our Mighty One, our Creator, our Redeemer, our Maker, the Holy One of Jacob.",
-        "The King who is good and does good to all; every day He has done good, does good, and will do good for us.",
-        "May He continue to grant us grace, kindness, mercy, relief, rescue, success, blessing, salvation, comfort, sustenance, compassion, life, peace, and every good thing."
-    ],
     tallis: [
         "Blessed are You, the Lord our God, Ruler of the universe, who makes us holy through the commandments and commands us to wrap ourselves in tzitzis."
     ],
